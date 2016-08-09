@@ -29,13 +29,27 @@ class ViewController: UIViewController {
         
     }
     
+    var saveProgram: CalculatorBrain.PropertyList?
+    
+    @IBAction func save() {
+        saveProgram = brain.program
+    }
+    
+    @IBAction func restore() {
+        if saveProgram != nil {
+            brain.program = saveProgram!
+            print(brain.result)
+            displayValue = brain.result
+        }
+    }
+    
     private var displayValue : Double {
         get {
             return Double(display.text!)!
         }
         
         set {
-            display.text = String(displayValue)
+            display.text = String(newValue)
         }
     }
     
