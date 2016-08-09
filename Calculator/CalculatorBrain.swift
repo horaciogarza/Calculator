@@ -29,18 +29,18 @@ class CalculatorBrain {
     
     private enum Operation {
         case Constant(Double)
-        case UnaryOperation(Double -> Double)
+        case UnaryOperation((Double) -> Double)
         case BinaryOperation((Double, Double) -> Double)
         case Equals
     }
     
     func setOperand(operand: Double) {
         accumulator = operand
-        internalProgram.append(operand)
+        internalProgram.append(operand as! AnyObject)
     }
     
     func performOperation(symbol: String) {
-        internalProgram.append(symbol)
+        internalProgram.append(symbol as! AnyObject)
         
         if  let operation = operations[symbol] {
             switch operation {
@@ -80,16 +80,16 @@ class CalculatorBrain {
     
     var program: PropertyList {
         get {
-            return internalProgram
+            return internalProgram as! AnyObject
         }
         set {
             clear()
             if let arrayOfOps = newValue as? [AnyObject] {
                 for op in arrayOfOps {
                     if let operand = op as? Double {
-                        setOperand(operand)
+                        setOperand(operand: operand)
                     } else if let operation = op as? String {
-                        performOperation(operation)
+                        performOperation(symbol: operation)
                     }
                 }
             }
